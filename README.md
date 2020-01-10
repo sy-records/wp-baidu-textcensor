@@ -1,7 +1,7 @@
 <h2 align="center">Baidu TextCensor</h2>
 
 <p align="center">
-🗑 在WordPress中加入百度文本内容审核，过滤敏感内容
+🗑 在WordPress中加入百度文本内容审核，过滤评论中的敏感内容
     <img src="images/bttc.png" alt="wp-baidu-textcensor" align="center" />
 </p>
 
@@ -44,7 +44,9 @@
 
 ### 安装
 
-在其他博客系统中，如 ThinkPHP、Laravel 等，可以直接使用 composer 包，自行调用处理。项目地址：[https://github.com/sy-records/baidu-textcensor](https://github.com/sy-records/baidu-textcensor)
+在其他博客系统中，如 ThinkPHP、Laravel 等，可以直接使用 composer 包，自行调用处理
+
+项目地址：[https://github.com/sy-records/baidu-textcensor](https://github.com/sy-records/baidu-textcensor)
 
 ```bash
 composer require sy-records/baidu-textcensor
