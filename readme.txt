@@ -6,22 +6,22 @@ Requires at least: 4.2
 Tested up to: 5.3.2
 Stable tag: 4.3
 Requires PHP: 5.4.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
-基于百度AI文本内容审核过滤WordPress评论中的一些敏感内容
+基于百度文本内容审核过滤WordPress评论中的一些敏感内容
 
 == Description ==
 
-<strong>在WordPress中加入百度AI文本内容审核，过滤评论敏感内容</strong>
+<strong>在WordPress中加入百度文本内容审核，过滤评论敏感内容</strong>
 
 <strong>依赖第三方服务</strong>
 <ul>
-<li>依赖百度AI文本审核技术：https://ai.baidu.com/tech/textcensoring</li>
-<li>使用说明：https://ai.baidu.com/ai-doc/ANTIPORN/Vk3h6xaga</li>
-<li>即在WordPress中有新的评论时，将会调用百度AI文本审核接口进行验证，验证结果分为4种，分别为1.合规，2.不合规，3.疑似，4.审核失败</li>
-<li>不改变原有的讨论规则，合规 执行原有逻辑；不合规 提示重新评论；疑似和审核失败 写数据库，人工二次审核</li>
+    <li>依赖百度AI文本审核技术：https://ai.baidu.com/tech/textcensoring</li>
+    <li>使用说明：https://ai.baidu.com/ai-doc/ANTIPORN/Vk3h6xaga</li>
+    <li>即在WordPress中有新的评论时，将会调用百度文本审核接口进行验证，验证结果分为4种，分别为1.合规，2.不合规，3.疑似，4.审核失败</li>
+    <li>不改变原有的讨论规则，不合规时提示重新评论；疑似和审核失败时写数据库，人工二次审核</li>
 </ul>
 
 <strong>主要功能：</strong>
@@ -36,7 +36,7 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
 1. 把 wp-baidu-textcensor 文件夹上传到 /wp-content/plugins/ 目录下<br />
 2. 在后台插件列表中激活 wp-baidu-textcensor<br />
-3. 在“百度内容审核设置”菜单中输入百度AI内容审核相关的 AppID、API Key、Secret Key 信息<br />
+3. 在“百度内容审核设置”菜单中输入百度文本内容审核相关的 AppID、API Key、Secret Key 信息<br />
 4. 开始使用吧~
 
 == Screenshots ==
@@ -44,6 +44,10 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 1. screenshot-1.png
 
 == Changelog ==
+
+= 1.0.1 =
+* Updated readme.txt
+* Updated pre_comment_approved filter hook
 
 = 1.0.0 =
 * First version
