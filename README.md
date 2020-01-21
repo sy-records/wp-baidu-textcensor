@@ -40,31 +40,19 @@
 * [wp-geetest](https://github.com/sy-records/wp-geetest) 基于极验 3.0，在 WordPress 的登录和评论时加入极验验证
 * [PushWordPressToWeChat](https://github.com/sy-records/PushWordPressToWeChat) 基于 PushBear 服务提供 WordPress 内容更新微信订阅推送，需要微信认证订阅号/服务号
 
-## 其他博客系统
+## 其他
 
-### 安装
+### Typecho
+
+下载源码，将源码上传到 Typecho 插件目录 usr/plugins，然后在后台启用
+
+项目地址：[https://github.com/sy-records/BaiduTextcensor](https://github.com/sy-records/BaiduTextcensor)
+
+### 其他博客系统
 
 在其他博客系统中，如 ThinkPHP、Laravel 等，可以直接使用 composer 包，自行调用处理
 
 项目地址：[https://github.com/sy-records/baidu-textcensor](https://github.com/sy-records/baidu-textcensor)
-
-```bash
-composer require sy-records/baidu-textcensor
-```
-
-### 使用
-
-```php
-$appId = "";
-$apiKey = "";
-$secretKey = "";
-
-$client = new \Luffy\TextCensor\Core($appId, $apiKey, $secretKey);
-$res = $client->textCensorUserDefined("沈唁志博客：https://qq52o.me"); //待审核文本字符串
-
-//具体参数说明见：https://ai.baidu.com/ai-doc/ANTIPORN/Nk3h6xbb2
-var_dump($res);
-```
 
 ## License
 
