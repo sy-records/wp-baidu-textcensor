@@ -26,7 +26,7 @@
 
 从 Github 或 [WordPress Plugins](https://wordpress.org/plugins/baidu-textcensor/) 下载源码，通过 WordPress 后台上传安装，或者直接将源码上传到 WordPress 插件目录 `wp-content/plugins`，然后在后台启用
 
-2. 在 WordPress 后台搜索 `Baidu TextCensor`
+2. 在 WordPress 后台安装插件页面搜索 `Baidu TextCensor`。（**推荐使用**）
 
 ### 设置
 
@@ -44,7 +44,7 @@
 
 ### Typecho
 
-下载源码，将源码上传到 Typecho 插件目录 usr/plugins，然后在后台启用
+下载源码，将源码上传到 Typecho 插件目录 `usr/plugins`，然后在后台启用
 
 项目地址：[https://github.com/sy-records/BaiduTextcensor](https://github.com/sy-records/BaiduTextcensor)
 
