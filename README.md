@@ -46,7 +46,7 @@
 
 下载源码，将源码上传到 Typecho 插件目录 `usr/plugins`，然后在后台启用
 
-项目地址：[https://github.com/sy-records/BaiduTextcensor](https://github.com/sy-records/BaiduTextcensor)
+项目地址：[https://github.com/sy-records/ty-baidu-textcensor](https://github.com/sy-records/ty-baidu-textcensor)
 
 ### 其他博客系统
 
