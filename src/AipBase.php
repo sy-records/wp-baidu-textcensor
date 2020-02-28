@@ -210,21 +210,25 @@ class AipBase
     private function baiduWpRequest($url, $params = "", $ispost = 0)
     {
         $args = array(
-            'body' => $params,
-            'timeout' => '60'
+            'timeout' => '15'
         );
         if ($ispost) {
+            $args['body'] = $params;
             $response = wp_remote_post($url, $args);
         } else {
             $params = is_array($params) ? http_build_query($params) : $params;
             if ($params) {
-                $response = wp_remote_get($url . '?' . $params);
+                $response = wp_remote_get($url . '?' . $params, $args);
             } else {
-                $response = wp_remote_get($url);
+                $response = wp_remote_get($url, $args);
             }
         }
+        $body = '';
+        if (is_array($response) && !is_wp_error($response) && $response['response']['code'] == '200') {
+            $body = $response['body'];
+        }
         return array(
-            'content' => @$response['body']
+            'content' => $body
         );
     }
 
