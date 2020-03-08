@@ -38,7 +38,7 @@
 
 * [wordpress-qcloud-cos](https://github.com/sy-records/wordpress-qcloud-cos) 使用腾讯云对象存储服务 COS 作为附件存储空间
 * [wp-geetest](https://github.com/sy-records/wp-geetest) 基于极验 3.0，在 WordPress 的登录和评论时加入极验验证
-* [PushWordPressToWeChat](https://github.com/sy-records/PushWordPressToWeChat) 基于 PushBear 服务提供 WordPress 内容更新微信订阅推送，需要微信认证订阅号/服务号
+* [Push Message To WeChat](https://github.com/sy-records/push-message-to-wechat) 基于 PushBear 服务提供 WordPress 内容更新微信订阅推送，需要微信认证订阅号/服务号
 
 ## 其他
 
