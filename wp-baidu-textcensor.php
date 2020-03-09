@@ -2,8 +2,8 @@
 /*
 Plugin Name:  Baidu TextCensor
 Plugin URI:   https://github.com/sy-records/wp-baidu-textcensor
-Description:  在WordPress中加入百度文本内容审核，过滤评论中的敏感内容
-Version:      1.0.2
+Description:  基于百度文本内容审核技术来提供WordPress评论内容审核
+Version:      1.0.3
 Author:       沈唁
 Author URI:   https://qq52o.me
 License:      Apache 2.0
@@ -29,11 +29,22 @@ function bdtc_submit_default_options()
     }
 }
 
+// stop plugin
+function bdtc_stop_option()
+{
+    $option = get_option('BaiduTextCensor');
+    if ($option['delete']) {
+        delete_option("BaiduTextCensor");
+    }
+}
+
+register_deactivation_hook(__FILE__, 'bdtc_stop_option');
+
 // setting plugin
 add_action('admin_menu', 'bdtc_submit_menu');
 function bdtc_submit_menu()
 {
-    add_submenu_page('options-general.php', '百度内容审核设置', '百度内容审核设置', 'manage_options', 'Baidu_Text_Censor', 'bdtc_submit_options', '');
+    add_submenu_page('options-general.php', '评论内容审核设置', '评论内容审核设置', 'manage_options', 'Baidu_Text_Censor', 'bdtc_submit_options', '');
 }
 
 // add setting button
@@ -71,14 +82,14 @@ function bdtc_submit_options()
         if ($check_status) {
             echo '<div class="error" id="message"><p>获取Access Token失败，请检查参数</p></div>';
         } else {
-            $pwtwOption = array(
+            $bdtcOption = array(
                 'app_id' => $app_id,
                 'api_key' => $api_key,
                 'secret_key' => $secret_key,
                 'check_me' => $check_me,
                 'delete' => $delete,
             );
-            $res = update_option('BaiduTextCensor', $pwtwOption);//更新选项
+            $res = update_option('BaiduTextCensor', $bdtcOption);//更新选项
             if ($res) {
                 $updated = '设置成功！';
             } else {
@@ -92,7 +103,7 @@ function bdtc_submit_options()
     $check_me = $option['check_me'] !== false ? 'checked="checked"' : '';
     $delete = $option['delete'] !== false ? 'checked="checked"' : '';
     echo '<div class="wrap">';
-    echo '<h2>百度内容审核设置</h2>';
+    echo '<h2>评论内容审核设置</h2>';
     echo '<form method="post">';
     echo '<table class="form-table">';
     echo '<tr valign="top">';
@@ -116,7 +127,7 @@ function bdtc_submit_options()
     echo '</tr>';
     echo '<tr valign="top">';
     echo '<th scope="row">是否删除配置信息</th>';
-    echo '<td><label><input value="true" type="checkbox" name="delete" ' . $delete . '> 勾选后删除插件时会删除保存的配置信息，减少数据库垃圾数据！</label></td>';
+    echo '<td><label><input value="true" type="checkbox" name="delete" ' . $delete . '> 勾选后停用插件时会删除保存的配置信息</label></td>';
     echo '</tr>';
     echo '</table>';
     echo '<p class="submit">';
