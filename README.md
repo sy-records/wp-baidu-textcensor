@@ -19,7 +19,7 @@
 
 ### 推荐使用
 
-在 WordPress 后台安装插件页面搜索 `Baidu TextCensor`
+在 WordPress 后台安装插件页面搜索 `Baidu TextCensor For Comments`
 
 ### 下载源码
 
