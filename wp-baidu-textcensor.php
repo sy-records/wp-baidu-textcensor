@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name:  Baidu TextCensor
+Plugin Name:  Baidu TextCensor For Comments
 Plugin URI:   https://github.com/sy-records/wp-baidu-textcensor
 Description:  基于百度文本内容审核技术来提供WordPress评论内容审核
 Version:      1.0.3
