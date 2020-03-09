@@ -1,8 +1,6 @@
 <h2 align="center">Baidu TextCensor For Comments</h2>
 
-<p align="center">
 基于百度文本内容审核技术来提供WordPress评论内容审核，对网站用户的评论信息检测，一旦发现用户提交恶意垃圾内容，可以做到文本的自动审核与实时过滤。
-</p>
 
 ## 百度文本内容审核
 
@@ -17,17 +15,17 @@
 * 低俗辱骂：对文本中的侮辱谩骂、人身攻击、消极宣泄等内容进行识别
 * 低质灌水：对网络社区常见的乱码、水帖、刷屏等无意义的灌水信息进行识别
 
-## WordPress
+## 安装
 
-### 安装
+### 推荐使用
 
-1. 在 WordPress 后台安装插件页面搜索 `Baidu TextCensor`。**（推荐使用）**
+在 WordPress 后台安装插件页面搜索 `Baidu TextCensor`
 
-2. 下载源码
+### 下载源码
 
 从 Github 或 [WordPress Plugins](https://wordpress.org/plugins/baidu-textcensor/) 下载源码，通过 WordPress 后台上传安装，或者直接将源码上传到 WordPress 插件目录 `wp-content/plugins`，然后在后台启用
 
-### 设置
+## 设置
 
 在百度Ai控制台的 [产品服务 / 内容审核 - 应用列表 创建应用](https://console.bce.baidu.com/ai/?fromai=1#/ai/antiporn/app/list) 后获取 AppID、API Key、Secret Key
 
