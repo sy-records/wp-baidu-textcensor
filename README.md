@@ -1,8 +1,7 @@
-<h2 align="center">Baidu TextCensor</h2>
+<h2 align="center">Baidu TextCensor For Comments</h2>
 
 <p align="center">
-🗑 在WordPress中加入百度文本内容审核，过滤评论中的敏感内容
-    <img src="images/bttc.png" alt="wp-baidu-textcensor" align="center" />
+基于百度文本内容审核技术来提供WordPress评论内容审核，对网站用户的评论信息检测，一旦发现用户提交恶意垃圾内容，可以做到文本的自动审核与实时过滤。
 </p>
 
 ## 百度文本内容审核
@@ -22,23 +21,22 @@
 
 ### 安装
 
-1. 下载源码
+1. 在 WordPress 后台安装插件页面搜索 `Baidu TextCensor`。**（推荐使用）**
+
+2. 下载源码
 
 从 Github 或 [WordPress Plugins](https://wordpress.org/plugins/baidu-textcensor/) 下载源码，通过 WordPress 后台上传安装，或者直接将源码上传到 WordPress 插件目录 `wp-content/plugins`，然后在后台启用
-
-2. 在 WordPress 后台安装插件页面搜索 `Baidu TextCensor`。（**推荐使用**）
 
 ### 设置
 
 在百度Ai控制台的 [产品服务 / 内容审核 - 应用列表 创建应用](https://console.bce.baidu.com/ai/?fromai=1#/ai/antiporn/app/list) 后获取 AppID、API Key、Secret Key
 
-![](images/screenshot-1.png)
+![](screenshot-1.png)
 
 ## 其他插件推荐
 
 * [wordpress-qcloud-cos](https://github.com/sy-records/wordpress-qcloud-cos) 使用腾讯云对象存储服务 COS 作为附件存储空间
-* [wp-geetest](https://github.com/sy-records/wp-geetest) 基于极验 3.0，在 WordPress 的登录和评论时加入极验验证
-* [Push Message To WeChat](https://github.com/sy-records/push-message-to-wechat) 基于 PushBear 服务提供 WordPress 内容更新微信订阅推送，需要微信认证订阅号/服务号
+* [push-message-to-wechat](https://github.com/sy-records/push-message-to-wechat) 基于 PushBear 服务提供 WordPress 内容更新微信订阅推送，需要微信认证订阅号/服务号
 
 ## 其他
 
