@@ -52,6 +52,7 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
 * 更新readme为markdown格式
 * 更新插件名称为Baidu TextCensor For Comments
+* 修复停用插件删除配置
 
 = 1.0.2 =
 * Optimization baiduWpRequest method
