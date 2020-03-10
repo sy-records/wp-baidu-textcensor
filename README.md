@@ -31,6 +31,12 @@
 
 ![](screenshot-1.png)
 
+## 文章内容审核
+
+请使用`TextCensor For Articles`插件。
+
+[Github](https://github.com/sy-records/textcensor-for-articles)、[WordPress Plugins](https://wordpress.org/plugins/textcensor-for-articles)
+
 ## 其他插件推荐
 
 * [wordpress-qcloud-cos](https://github.com/sy-records/wordpress-qcloud-cos) 使用腾讯云对象存储服务 COS 作为附件存储空间

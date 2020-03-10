@@ -6,7 +6,7 @@ Requires at least: 4.2
 Tested up to: 5.3.2
 Stable tag: 4.3
 Requires PHP: 5.6.0
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
@@ -35,6 +35,10 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
 接受定制开发 WordPress 插件，如有定制开发需求可以[联系QQ](ttp://wpa.qq.com/msgrd?v=3&uin=85464277&site=qq&menu=yes)。
 
+## 相关插件
+
+**文章内容审核**：[GitHub](https://github.com/sy-records/textcensor-for-articles)，[WordPress Plugins](https://wordpress.org/plugins/textcensor-for-articles)
+
 == Installation ==
 
 1. 把 wp-baidu-textcensor 文件夹上传到 /wp-content/plugins/ 目录下
@@ -48,6 +52,10 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
 == Changelog ==
 
+= 1.0.4 =
+
+* 修复add_submenu_page参数错误提示
+
 = 1.0.3 =
 
 * 更新readme为markdown格式
@@ -55,11 +63,14 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 * 修复停用插件删除配置
 
 = 1.0.2 =
+
 * Optimization baiduWpRequest method
 
 = 1.0.1 =
+
 * Updated readme.txt
 * Updated pre_comment_approved filter hook
 
 = 1.0.0 =
+
 * First version
