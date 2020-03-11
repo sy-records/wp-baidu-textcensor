@@ -32,7 +32,7 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
 [沈唁志](https://qq52o.me "沈唁志")
 
-接受定制开发 WordPress 插件，如有定制开发需求可以[联系QQ](ttp://wpa.qq.com/msgrd?v=3&uin=85464277&site=qq&menu=yes)。
+接受定制开发 WordPress 插件，如有定制开发需求可以[联系QQ](http://wpa.qq.com/msgrd?v=3&uin=85464277&site=qq&menu=yes)。
 
 ## 相关插件
 
