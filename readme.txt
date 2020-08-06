@@ -5,7 +5,7 @@ Tags: baidu,textcensor,comments,文本内容审核,评论过滤
 Requires at least: 4.2
 Tested up to: 5.4
 Requires PHP: 5.6.0
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
@@ -32,8 +32,6 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
 [沈唁志](https://qq52o.me "沈唁志")
 
-接受定制开发 WordPress 插件，如有定制开发需求可以[联系QQ](http://wpa.qq.com/msgrd?v=3&uin=85464277&site=qq&menu=yes)。
-
 ## 相关插件
 
 **文章内容审核**：[GitHub](https://github.com/sy-records/textcensor-for-articles)，[WordPress Plugins](https://wordpress.org/plugins/textcensor-for-articles)
@@ -50,6 +48,10 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 1. screenshot-1.png
 
 == Changelog ==
+
+= 1.0.5 =
+
+* 更新Tested up to版本号
 
 = 1.0.4 =
 

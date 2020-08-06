@@ -3,7 +3,7 @@
 Plugin Name:  Baidu TextCensor For Comments
 Plugin URI:   https://github.com/sy-records/wp-baidu-textcensor
 Description:  基于百度文本内容审核技术来提供WordPress评论内容审核
-Version:      1.0.4
+Version:      1.0.5
 Author:       沈唁
 Author URI:   https://qq52o.me
 License:      Apache 2.0
