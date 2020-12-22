@@ -3,9 +3,9 @@ Contributors: shenyanzhi
 Donate link: https://qq52o.me/sponsor.html
 Tags: baidu,textcensor,comments,文本内容审核,评论过滤
 Requires at least: 4.2
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.6.0
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
@@ -48,6 +48,10 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 1. screenshot-1.png
 
 == Changelog ==
+
+= 1.0.6 =
+
+* 支持WordPress 5.6
 
 = 1.0.5 =
 
