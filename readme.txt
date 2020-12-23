@@ -5,7 +5,7 @@ Tags: baidu,textcensor,comments,文本内容审核,评论过滤
 Requires at least: 4.2
 Tested up to: 5.6
 Requires PHP: 5.6.0
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
@@ -48,6 +48,10 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 1. screenshot-1.png
 
 == Changelog ==
+
+= 1.0.7 =
+
+* 修改wp_die的响应状态码
 
 = 1.0.6 =
 
