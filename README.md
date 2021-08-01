@@ -4,7 +4,7 @@
 
 ## 百度文本内容审核
 
-[百度文本内容审核](https://ai.baidu.com/tech/textcensoring)能一站式检测文本中夹杂的色情、推广、辱骂、违禁、涉政、灌水等垃圾内容，净化网络环境，为您的应用提供更可靠的内容安全保障，运用业界领先的深度学习技术，判断一段文本内容是否符合网络发文规范，实现自动化、智能化的文本审核，大幅节省内容审核的人力成本，为您的产品体验保驾护航
+[百度文本内容审核](https://ai.baidu.com/tech/textcensoring) 能一站式检测文本中夹杂的色情、推广、辱骂、违禁、涉政、灌水等垃圾内容，净化网络环境，为您的应用提供更可靠的内容安全保障，运用业界领先的深度学习技术，判断一段文本内容是否符合网络发文规范，实现自动化、智能化的文本审核，大幅节省内容审核的人力成本，为您的产品体验保驾护航
 
 ### 能力介绍
 
@@ -35,7 +35,7 @@
 
 请使用`TextCensor For Articles`插件。
 
-[Github](https://github.com/sy-records/textcensor-for-articles)、[WordPress Plugins](https://wordpress.org/plugins/textcensor-for-articles)
+[GitHub](https://github.com/sy-records/textcensor-for-articles) 、[WordPress Plugins](https://wordpress.org/plugins/textcensor-for-articles)
 
 ## 其他插件推荐
 

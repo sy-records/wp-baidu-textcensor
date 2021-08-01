@@ -230,7 +230,7 @@ function bdtc_request_check($option, $comment)
         case 3:
         case 4:
             // 疑似和失败的写数据库，人工审核
-            add_filter( 'pre_comment_approved' , '__return_zero');
+            add_filter('pre_comment_approved' , '__return_zero');
             break;
     }
 }
