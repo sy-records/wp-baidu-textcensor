@@ -223,10 +223,14 @@ function bdtc_request_check($option, $comment)
     $client = new \Luffy\TextCensor\AipBase($option['app_id'], $option['api_key'], $option['secret_key']);
     $res = $client->textCensorUserDefined($comment);
     // 1.合规，2.不合规，3.疑似，4.审核失败
-    if ($res['conclusionType'] == 2) {
-        wp_die("评论内容{$res['data'][0]['msg']}，请重新评论", 409);
-    } elseif (in_array($res['conclusionType'], [3, 4])) {
-        // 疑似和失败的写数据库，人工审核
-        add_filter( 'pre_comment_approved' , '__return_zero');
+    switch ($res['conclusionType']) {
+        case 2:
+            wp_die("评论内容{$res['data'][0]['msg']}，请重新评论", 409);
+            break;
+        case 3:
+        case 4:
+            // 疑似和失败的写数据库，人工审核
+            add_filter( 'pre_comment_approved' , '__return_zero');
+            break;
     }
 }
