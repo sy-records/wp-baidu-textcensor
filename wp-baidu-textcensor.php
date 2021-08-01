@@ -3,7 +3,7 @@
 Plugin Name:  Baidu TextCensor For Comments
 Plugin URI:   https://github.com/sy-records/wp-baidu-textcensor
 Description:  基于百度文本内容审核技术来提供WordPress评论内容审核
-Version:      1.0.7
+Version:      1.0.8
 Author:       沈唁
 Author URI:   https://qq52o.me
 License:      Apache 2.0
@@ -23,6 +23,7 @@ function bdtc_submit_default_options()
             'secret_key' => '',
             'check_me' => '',
             'delete' => '',
+            'check_roles' => '',
         );
         //更新选项
         update_option('BaiduTextCensor', $default);
@@ -57,6 +58,18 @@ function bdtc_plugin_action_links($links, $file)
 }
 add_filter('plugin_action_links', 'bdtc_plugin_action_links', 10, 2);
 
+function bdtc_get_user_roles()
+{
+    $res = [];
+
+    $editable_roles = array_reverse( get_editable_roles() );
+    foreach ( $editable_roles as $role => $details ) {
+        $res[$role] = translate_user_role( $details['name'] );
+    }
+
+    return $res;
+}
+
 // setting page
 function bdtc_submit_options()
 {
@@ -77,6 +90,7 @@ function bdtc_submit_options()
         $secret_key = sanitize_text_field($_POST['secret_key']);
         $check_me = isset($_POST['check_me']) ? sanitize_text_field($_POST['check_me']) : false;
         $delete = isset($_POST['delete']) ? sanitize_text_field($_POST['delete']) : false;
+        $check_roles = isset($_POST['check_roles']) ? implode(',', $_POST['check_roles']) : '';
 
         $check_status = bdtc_submit_check($app_id, $api_key, $secret_key);
         if ($check_status) {
@@ -88,6 +102,7 @@ function bdtc_submit_options()
                 'secret_key' => $secret_key,
                 'check_me' => $check_me,
                 'delete' => $delete,
+                'check_roles' => $check_roles,
             );
             $res = update_option('BaiduTextCensor', $bdtcOption);//更新选项
             if ($res) {
@@ -102,6 +117,8 @@ function bdtc_submit_options()
     $option = get_option('BaiduTextCensor');
     $check_me = $option['check_me'] !== false ? 'checked="checked"' : '';
     $delete = $option['delete'] !== false ? 'checked="checked"' : '';
+    $roles = bdtc_get_user_roles();
+    $check_roles = explode(',', $option['check_roles']);
     echo '<div class="wrap">';
     echo '<h2>评论内容审核设置</h2>';
     echo '<form method="post">';
@@ -122,8 +139,23 @@ function bdtc_submit_options()
     echo '<td><input class="all-options" type="text" name="secret_key" value="' . $option['secret_key'] . '" /></td>';
     echo '</tr>';
     echo '<tr valign="top">';
-    echo '<th scope="row">是否过滤博主</th>';
-    echo '<td><label><input value="true" type="checkbox" name="check_me" ' . $check_me . '> 勾选后会跳过博主评论内容（需要是登录状态），不去验证。</label></td>';
+    echo '<th scope="row">跳过登录态验证</th>';
+    echo '<td><label><input value="true" type="checkbox" name="check_me" ' . $check_me . '> 勾选后如果是登录态则会跳过该用户评论内容，不去验证</label></td>';
+    echo '</tr>';
+    echo '<tr valign="top">';
+    echo '<th scope="row">需要验证的登录角色</th>';
+
+    echo '<td>';
+    foreach($roles as $role => $name) {
+        $check = '';
+        if (in_array($role, $check_roles)) {
+            $check = 'checked="checked"';
+        }
+        echo '<input type="checkbox" name="check_roles[]" value="' . $role . '" ' . $check . '>' . $name . '<br>';
+    }
+    echo '<br><label>选择需要在登录态下验证的角色，选择后即使选择了<strong>跳过登录态验证</strong>，属于该角色的用户评论也会进行验证</label>';
+    echo '</td>';
+
     echo '</tr>';
     echo '<tr valign="top">';
     echo '<th scope="row">是否删除配置信息</th>';
@@ -137,7 +169,7 @@ function bdtc_submit_options()
     echo '<p><strong>使用提示</strong>：<br>
 	1. AppID、API Key、Secret Key在百度 AI 控制台的 <a target="_blank" href="https://console.bce.baidu.com/ai/?fromai=1#/ai/antiporn/app/list">产品服务 / 内容审核 - 应用列表</a> 创建应用后获取；<br>
 	2. 百度有默认审核策略，如果误杀严重，请进入 <a target="_blank" href="https://ai.baidu.com/censoring#/strategylist">内容审核平台创建自定义规则</a> 进行修改策略；<br>
-	3. 如有问题请至 <a target="_blank" href="https://github.com/sy-records/wp-baidu-textcensor">Github</a> 查看使用说明或至沈唁志博客 <a target="_blank" href="https://qq52o.me/2720.html">插件发布页</a> 留言反馈。<br>
+	3. 如有问题请至 <a target="_blank" href="https://github.com/sy-records/wp-baidu-textcensor">GitHub</a> 查看使用说明或至沈唁志博客 <a target="_blank" href="https://qq52o.me/2720.html">插件发布页</a> 留言反馈。<br>
 	</p>';
     echo '</div>';
 }
@@ -164,18 +196,37 @@ if (!function_exists('is_user_logged_in')) {
 function bdtc_refused_comments($comment_data)
 {
     $option = get_option('BaiduTextCensor');
-    if ($option['check_me'] && !is_user_logged_in()) {
-        require_once dirname(__FILE__) . '/src/AipBase.php';
-        $client = new \Luffy\TextCensor\AipBase($option['app_id'], $option['api_key'], $option['secret_key']);
-            $res = $client->textCensorUserDefined($comment_data['comment_content']);
-        // 1.合规，2.不合规，3.疑似，4.审核失败
-        if ($res['conclusionType'] == 2) {
-            wp_die("评论内容" . $res['data'][0]['msg'] . "，请重新评论", 409);
-        } elseif (in_array($res['conclusionType'], [3, 4])) {
-            // 疑似和失败的写数据库，人工审核
-            add_filter( 'pre_comment_approved' , '__return_zero');
+    // 跳过登录态验证
+    if ($option['check_me']) {
+        if (!is_user_logged_in()) { // 没登录
+            bdtc_request_check($option, $comment_data['comment_content']);
+        } else { // 登录
+            $roles = explode(',', $option['check_roles']);
+            global $current_user;
+            foreach ($roles as $role) {
+                if(in_array($role, $current_user->roles)){
+                    bdtc_request_check($option, $comment_data['comment_content']);
+                    break;
+                }
+            }
         }
+    } else {
+        bdtc_request_check($option, $comment_data['comment_content']);
     }
     return( $comment_data );
 }
 add_filter('preprocess_comment', 'bdtc_refused_comments');
+
+function bdtc_request_check($option, $comment)
+{
+    require_once dirname(__FILE__) . '/src/AipBase.php';
+    $client = new \Luffy\TextCensor\AipBase($option['app_id'], $option['api_key'], $option['secret_key']);
+    $res = $client->textCensorUserDefined($comment);
+    // 1.合规，2.不合规，3.疑似，4.审核失败
+    if ($res['conclusionType'] == 2) {
+        wp_die("评论内容{$res['data'][0]['msg']}，请重新评论", 409);
+    } elseif (in_array($res['conclusionType'], [3, 4])) {
+        // 疑似和失败的写数据库，人工审核
+        add_filter( 'pre_comment_approved' , '__return_zero');
+    }
+}
