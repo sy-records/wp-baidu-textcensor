@@ -51,7 +51,7 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
 = 1.1.1 =
 
-* 增加`userId`和`userIp`参数，可在内容审核平台-数据统计-用户风险统计使用
+* 增加`userId`和`userIp`参数，可在内容审核平台-数据统计-[用户风险统计](https://ai.baidu.com/censoring#/overview/userrisk)使用
 
 = 1.1.0 =
 
