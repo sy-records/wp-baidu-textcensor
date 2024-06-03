@@ -3,7 +3,7 @@
 Plugin Name:  Baidu TextCensor For Comments
 Plugin URI:   https://github.com/sy-records/wp-baidu-textcensor
 Description:  基于百度文本内容审核技术来提供WordPress评论内容审核
-Version:      1.1.0
+Version:      1.1.1
 Author:       沈唁
 Author URI:   https://qq52o.me
 License:      Apache 2.0
@@ -199,33 +199,39 @@ function bdtc_refused_comments($comment_data)
     // 跳过登录态验证
     if ($option['check_me']) {
         if (!is_user_logged_in()) { // 没登录
-            bdtc_request_check($option, $comment_data['comment_content']);
+            bdtc_request_check($option, $comment_data);
         } else { // 登录
             $roles = explode(',', $option['check_roles']);
             global $current_user;
             foreach ($roles as $role) {
                 if(in_array($role, $current_user->roles)){
-                    bdtc_request_check($option, $comment_data['comment_content']);
+                    bdtc_request_check($option, $comment_data);
                     break;
                 }
             }
         }
     } else {
-        bdtc_request_check($option, $comment_data['comment_content']);
+        bdtc_request_check($option, $comment_data);
     }
     return $comment_data;
 }
 add_filter('preprocess_comment', 'bdtc_refused_comments');
 
-function bdtc_request_check($option, $comment)
+function bdtc_request_check($option, $comment_data)
 {
     require_once dirname(__FILE__) . '/src/AipBase.php';
     $client = new \Luffy\TextCensor\AipBase($option['app_id'], $option['api_key'], $option['secret_key']);
-    $res = $client->textCensorUserDefined($comment);
+    $result = $client->textCensorUserDefined($comment_data['comment_content'], $comment_data['comment_author_email'], $comment_data['comment_author_IP']);
+
+    if (isset($result['error_code'])) {
+        add_filter('pre_comment_approved' , '__return_zero');
+        return;
+    }
+
     // 1.合规，2.不合规，3.疑似，4.审核失败
-    switch ($res['conclusionType']) {
+    switch ($result['conclusionType']) {
         case 2:
-            wp_die("评论内容{$res['data'][0]['msg']}，请重新评论", 409);
+            wp_die("评论内容{$result['data'][0]['msg']}，请重新评论", 409);
             break;
         case 3:
         case 4:

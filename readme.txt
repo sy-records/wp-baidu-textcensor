@@ -2,10 +2,10 @@
 Contributors: shenyanzhi
 Donate link: https://qq52o.me/sponsor.html
 Tags: baidu,textcensor,comments,文本内容审核,评论过滤
-Requires at least: 4.6
+Requires at least: 5.6
 Tested up to: 6.5
-Requires PHP: 5.6.0
-Stable tag: 1.1.0
+Requires PHP: 7.0
+Stable tag: 1.1.1
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
@@ -48,6 +48,10 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 1. screenshot-1.png
 
 == Changelog ==
+
+= 1.1.1 =
+
+* 增加`userId`和`userIp`参数，可在内容审核平台-数据统计-[用户风险统计](https://ai.baidu.com/censoring#/overview/userrisk)使用
 
 = 1.1.0 =
 
