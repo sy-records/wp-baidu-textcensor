@@ -29,17 +29,13 @@
 
 在百度Ai控制台的 [产品服务 / 内容审核 - 应用列表 创建应用](https://console.bce.baidu.com/ai/?fromai=1#/ai/antiporn/app/list) 后获取 AppID、API Key、Secret Key
 
-![](screenshot-1.png)
+![](.wordpress-org/screenshot-1.png)
 
 ## 文章内容审核
 
 请使用`TextCensor For Articles`插件。
 
 [GitHub](https://github.com/sy-records/textcensor-for-articles) 、[WordPress Plugins](https://wordpress.org/plugins/textcensor-for-articles)
-
-## 其他插件推荐
-
-* [wordpress-qcloud-cos](https://github.com/sy-records/wordpress-qcloud-cos) 使用腾讯云对象存储服务 COS 作为附件存储空间
 
 ## 其他
 

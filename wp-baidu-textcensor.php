@@ -3,7 +3,7 @@
 Plugin Name:  Baidu TextCensor For Comments
 Plugin URI:   https://github.com/sy-records/wp-baidu-textcensor
 Description:  基于百度文本内容审核技术来提供WordPress评论内容审核
-Version:      1.1.1
+Version:      1.1.2
 Author:       沈唁
 Author URI:   https://qq52o.me
 License:      Apache 2.0
@@ -15,16 +15,16 @@ function bdtc_submit_default_options()
 {
     // 获取选项
     $default = get_option('BaiduTextCensor');
-    if ($default == '') {
+    if (empty($default)) {
         // 设置默认数据
-        $default = array(
+        $default = [
             'app_id' => '',
             'api_key' => '',
             'secret_key' => '',
             'check_me' => '',
             'delete' => '',
-            'check_roles' => '',
-        );
+            'check_roles' => ''
+        ];
         //更新选项
         update_option('BaiduTextCensor', $default);
     }
@@ -35,7 +35,7 @@ function bdtc_stop_option()
 {
     $option = get_option('BaiduTextCensor');
     if ($option['delete']) {
-        delete_option("BaiduTextCensor");
+        delete_option('BaiduTextCensor');
     }
 }
 
@@ -62,9 +62,9 @@ function bdtc_get_user_roles()
 {
     $res = [];
 
-    $editable_roles = array_reverse( get_editable_roles() );
-    foreach ( $editable_roles as $role => $details ) {
-        $res[$role] = translate_user_role( $details['name'] );
+    $editable_roles = array_reverse(get_editable_roles());
+    foreach ($editable_roles as $role => $details) {
+        $res[$role] = translate_user_role($details['name']);
     }
 
     return $res;
@@ -96,24 +96,20 @@ function bdtc_submit_options()
         if ($check_status) {
             echo '<div class="error" id="message"><p>获取Access Token失败，请检查参数</p></div>';
         } else {
-            $bdtcOption = array(
+            $bdtc_option = [
                 'app_id' => $app_id,
                 'api_key' => $api_key,
                 'secret_key' => $secret_key,
                 'check_me' => $check_me,
                 'delete' => $delete,
-                'check_roles' => $check_roles,
-            );
-            $res = update_option('BaiduTextCensor', $bdtcOption);//更新选项
-            if ($res) {
-                $updated = '设置成功！';
-            } else {
-                $updated = '设置失败或未更新选项！';
-            }
+                'check_roles' => $check_roles
+            ];
+            $res = update_option('BaiduTextCensor', $bdtc_option);
+            $updated = $res ? '设置成功！' : '设置失败或未更新选项！';
             echo '<div class="updated" id="message"><p>' . $updated . '</p></div>';
         }
     }
-    // //获取选项
+    // 获取选项
     $option = get_option('BaiduTextCensor');
     $check_me = $option['check_me'] !== false ? 'checked="checked"' : '';
     $delete = $option['delete'] !== false ? 'checked="checked"' : '';
@@ -215,7 +211,7 @@ function bdtc_refused_comments($comment_data)
     }
     return $comment_data;
 }
-add_filter('preprocess_comment', 'bdtc_refused_comments');
+add_filter('preprocess_comment', 'bdtc_refused_comments', 99);
 
 function bdtc_request_check($option, $comment_data)
 {
