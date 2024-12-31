@@ -1,11 +1,11 @@
 === Baidu TextCensor For Comments ===
 Contributors: shenyanzhi
 Donate link: https://qq52o.me/sponsor.html
-Tags: baidu,textcensor,comments,文本内容审核,评论过滤
+Tags: baidu,textcensor,comments,评论过滤
 Requires at least: 5.6
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
@@ -45,9 +45,13 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
 == Screenshots ==
 
-1. screenshot-1.png
+1. 插件配置页面
 
 == Changelog ==
+
+= 1.1.2 =
+
+* 修复 preprocess_comment 钩子执行顺序问题
 
 = 1.1.1 =
 
