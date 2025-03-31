@@ -3,42 +3,38 @@
 Plugin Name:  Baidu TextCensor For Comments
 Plugin URI:   https://github.com/sy-records/wp-baidu-textcensor
 Description:  基于百度文本内容审核技术来提供WordPress评论内容审核
-Version:      1.1.2
+Version:      1.2.0
 Author:       沈唁
 Author URI:   https://qq52o.me
 License:      Apache 2.0
 */
 
-// init plugin
-add_action('admin_init', 'bdtc_submit_default_options');
-function bdtc_submit_default_options()
+function bdtc_set_options()
 {
-    // 获取选项
-    $default = get_option('BaiduTextCensor');
-    if (empty($default)) {
-        // 设置默认数据
-        $default = [
-            'app_id' => '',
-            'api_key' => '',
-            'secret_key' => '',
-            'check_me' => '',
-            'delete' => '',
-            'check_roles' => ''
-        ];
-        //更新选项
-        update_option('BaiduTextCensor', $default);
-    }
+    add_option('BaiduTextCensor', bdtc_get_default_option(), '', true);
 }
 
-// stop plugin
 function bdtc_stop_option()
 {
-    $option = get_option('BaiduTextCensor');
-    if ($option['delete']) {
+    $option = get_option('BaiduTextCensor', bdtc_get_default_option());
+    if (!empty($option['delete'])) {
         delete_option('BaiduTextCensor');
     }
 }
 
+function bdtc_get_default_option()
+{
+    return [
+        'app_id'      => '',
+        'api_key'     => '',
+        'secret_key'  => '',
+        'check_me'    => '',
+        'delete'      => '',
+        'check_roles' => ''
+    ];
+}
+
+register_activation_hook(__FILE__, 'bdtc_set_options');
 register_deactivation_hook(__FILE__, 'bdtc_stop_option');
 
 // setting plugin
@@ -110,7 +106,7 @@ function bdtc_submit_options()
         }
     }
     // 获取选项
-    $option = get_option('BaiduTextCensor');
+    $option = get_option('BaiduTextCensor', bdtc_get_default_option());
     $check_me = $option['check_me'] !== false ? 'checked="checked"' : '';
     $delete = $option['delete'] !== false ? 'checked="checked"' : '';
     $roles = bdtc_get_user_roles();
@@ -185,13 +181,45 @@ function bdtc_submit_check($appId, $apiKey, $secretKey)
 
 // 登录态无需验证
 if (!function_exists('is_user_logged_in')) {
-    require(ABSPATH . WPINC . '/pluggable.php');
+    require ABSPATH . WPINC . '/pluggable.php';
+}
+
+/**
+ * @return false|Redis
+ */
+function bdtc_get_redis()
+{
+    if (!extension_loaded('redis') || !defined('BDTC_ENABLE_REDIS') || !BDTC_ENABLE_REDIS) {
+        return false;
+    }
+
+    $redis = new Redis();
+    $host = defined('BDTC_REDIS_HOST') ? BDTC_REDIS_HOST : '127.0.0.1';
+    $port = defined('BDTC_REDIS_PORT') ? BDTC_REDIS_PORT : 6379;
+    $redis->connect($host, $port);
+    if (defined('BDTC_REDIS_PASSWORD')) $redis->auth(BDTC_REDIS_PASSWORD);
+    if (defined('BDTC_REDIS_DB')) $redis->select(BDTC_REDIS_DB);
+    return $redis;
 }
 
 // check comment
 function bdtc_refused_comments($comment_data)
 {
-    $option = get_option('BaiduTextCensor');
+    $option = get_option('BaiduTextCensor', bdtc_get_default_option());
+
+    $redis = bdtc_get_redis();
+    if ($redis) {
+        $key = 'bdtc:' . $comment_data['comment_author_IP'];
+        $limit = defined('BDTC_LIMIT') ? BDTC_LIMIT : 5;
+        $count = $redis->get($key);
+        if ($count >= $limit) {
+            wp_die('您评论过于频繁，请稍后再试', 409);
+        }
+
+        $redis->incr($key);
+        $redis->expire($key, defined('BDTC_EXPIRE') ? BDTC_EXPIRE : 60);
+    }
+
     // 跳过登录态验证
     if ($option['check_me']) {
         if (!is_user_logged_in()) { // 没登录
