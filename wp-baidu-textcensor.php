@@ -3,7 +3,7 @@
 Plugin Name:  Baidu TextCensor For Comments
 Plugin URI:   https://github.com/sy-records/wp-baidu-textcensor
 Description:  基于百度文本内容审核技术来提供WordPress评论内容审核
-Version:      1.2.0
+Version:      1.2.1
 Author:       沈唁
 Author URI:   https://qq52o.me
 License:      Apache 2.0
@@ -202,6 +202,28 @@ function bdtc_get_redis()
     return $redis;
 }
 
+function bdtc_check_comment_rate_limit($redis, $comment_data)
+{
+    $limit = defined('BDTC_LIMIT') ? BDTC_LIMIT : 5;
+    $expire = defined('BDTC_EXPIRE') ? BDTC_EXPIRE : 60;
+    $keys = [];
+    if (!empty($comment_data['comment_author_email'])) {
+        $keys[] = 'bdtc:' . $comment_data['comment_author_email'];
+    }
+    $keys[] = 'bdtc:' . $comment_data['comment_author_IP'];
+
+    foreach ($keys as $key) {
+        if ($redis->get($key) >= $limit) {
+            wp_die('您评论过于频繁，请稍后再试', 409);
+        }
+    }
+
+    foreach ($keys as $key) {
+        $redis->incr($key);
+        $redis->expire($key, $expire);
+    }
+}
+
 // check comment
 function bdtc_refused_comments($comment_data)
 {
@@ -209,15 +231,7 @@ function bdtc_refused_comments($comment_data)
 
     $redis = bdtc_get_redis();
     if ($redis) {
-        $key = 'bdtc:' . $comment_data['comment_author_IP'];
-        $limit = defined('BDTC_LIMIT') ? BDTC_LIMIT : 5;
-        $count = $redis->get($key);
-        if ($count >= $limit) {
-            wp_die('您评论过于频繁，请稍后再试', 409);
-        }
-
-        $redis->incr($key);
-        $redis->expire($key, defined('BDTC_EXPIRE') ? BDTC_EXPIRE : 60);
+        bdtc_check_comment_rate_limit($redis, $comment_data);
     }
 
     // 跳过登录态验证
