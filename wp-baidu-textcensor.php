@@ -205,20 +205,24 @@ function bdtc_get_redis()
 function bdtc_check_comment_rate_limit($redis, $comment_data)
 {
     $limit = defined('BDTC_LIMIT') ? BDTC_LIMIT : 5;
+    $duplicate_limit = defined('BDTC_DUPLICATE_LIMIT') ? BDTC_DUPLICATE_LIMIT : 1;
     $expire = defined('BDTC_EXPIRE') ? BDTC_EXPIRE : 60;
-    $keys = [];
+    $checks = [];
     if (!empty($comment_data['comment_author_email'])) {
-        $keys[] = 'bdtc:' . $comment_data['comment_author_email'];
+        $checks['bdtc:' . $comment_data['comment_author_email']] = $limit;
     }
-    $keys[] = 'bdtc:' . $comment_data['comment_author_IP'];
+    $checks['bdtc:' . $comment_data['comment_author_IP']] = $limit;
+    $comment_hash = hash('md5', $comment_data['comment_content']);
+    $comment_key = 'bdtc:comment:' . $comment_data['comment_author_IP'] . ':' . $comment_hash;
+    $checks[$comment_key] = $duplicate_limit;
 
-    foreach ($keys as $key) {
-        if ($redis->get($key) >= $limit) {
+    foreach ($checks as $key => $key_limit) {
+        if ($redis->get($key) >= $key_limit) {
             wp_die('您评论过于频繁，请稍后再试', 409);
         }
     }
 
-    foreach ($keys as $key) {
+    foreach (array_keys($checks) as $key) {
         $redis->incr($key);
         $redis->expire($key, $expire);
     }
