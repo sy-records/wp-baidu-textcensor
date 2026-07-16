@@ -35,15 +35,16 @@
 
 增加了 Redis 缓存，用于限制 IP 请求次数，避免浪费检测次数，可以在 `wp-config.php` 中配置进行启用：
 
-| 常量                  | 说明             |
-| :-------------------- |:---------------|
-| `BDTC_ENABLE_REDIS`   | 启用 Redis 配置    |
-| `BDTC_REDIS_HOST`     | Redis 主机地址     |
-| `BDTC_REDIS_PORT`     | Redis 端口       |
-| `BDTC_REDIS_PASSWORD` | Redis 密码       |
-| `BDTC_REDIS_DB`       | Redis 数据库      |
-| `BDTC_LIMIT`          | 限制次数，默认 `5` 次  |
-| `BDTC_EXPIRE`         | 过期时间，默认 `60` 秒 |
+| 常量                     | 说明                |
+|:-----------------------|:------------------|
+| `BDTC_ENABLE_REDIS`    | 启用 Redis 配置       |
+| `BDTC_REDIS_HOST`      | Redis 主机地址        |
+| `BDTC_REDIS_PORT`      | Redis 端口          |
+| `BDTC_REDIS_PASSWORD`  | Redis 密码          |
+| `BDTC_REDIS_DB`        | Redis 数据库         |
+| `BDTC_LIMIT`           | 限制次数，默认 `5` 次     |
+| `BDTC_DUPLICATE_LIMIT` | 重复评论限制次数，默认 `1` 次 |
+| `BDTC_EXPIRE`          | 过期时间，默认 `60` 秒    |
 
 ```php
 define('BDTC_ENABLE_REDIS', true);

@@ -5,7 +5,7 @@ Tags: baidu,textcensor,comments,评论过滤
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: Apache 2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
@@ -48,6 +48,10 @@ License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 1. 插件配置页面
 
 == Changelog ==
+
+= 1.2.1 =
+
+- 优化频率检测
 
 = 1.2.0 =
 
